@@ -17,9 +17,8 @@ public class CustomView1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new com.example.z.zcustomview.widget.CustomView1(this));
+        setContentView(R.layout.activity_custom_view1);
         ButterKnife.bind(this);
 
-        com.example.z.zcustomview.widget.CustomView1 customView1 = new com.example.z.zcustomview.widget.CustomView1(this);
     }
 }
