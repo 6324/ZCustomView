@@ -29,7 +29,7 @@ public class CustomView1 extends View {
     private void initPaint() {
         paint.setColor(Color.BLACK);       //设置画笔颜色
         paint.setStyle(Paint.Style.FILL);  //设置画笔模式为填充
-        paint.setStrokeWidth(3f);         //设置画笔宽度为10px
+        paint.setStrokeWidth(1f);         //设置画笔宽度为10px
     }
 
     public CustomView1(Context context) {
@@ -75,6 +75,8 @@ public class CustomView1 extends View {
         //线
         paint.setColor(Color.RED);
         canvas.drawLine(800, 0, 300, 90, paint);
+
+        paint.setStrokeWidth(1f);         //设置画笔宽度为10px
 
         //矩形1
         paint.setColor(Color.parseColor("#569597"));
@@ -181,6 +183,7 @@ public class CustomView1 extends View {
 
 
                 canvas.drawArc(rectF7, jj, jd, true, paint);
+
                 jj += jd;
             }
         }

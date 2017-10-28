@@ -17,14 +17,20 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
     }
-//
+
+    //
     @OnClick(R.id.btngoxy)
     public void startXy() {
         startActivity(new Intent(this, CoordinateActivity.class));
     }
 
-    @OnClick(R.id.btnmethod)
-    public void startMethod() {
-        startActivity(new Intent(this, CustomView1.class));
+    @OnClick(R.id.btncus1)
+    public void startcus1() {
+        startActivity(new Intent(this, CustomActivity1.class));
+    }
+
+    @OnClick(R.id.btncus2)
+    public void startcus2() {
+        startActivity(new Intent(this, CustomActivity2.class));
     }
 }

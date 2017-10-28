@@ -15,15 +15,16 @@
         android:text="坐标" />
 
     <Button
-        android:id="@+id/btnmethod"
+        android:id="@+id/btncus1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="绘制图形" />
 
     <Button
+        android:id="@+id/btncus2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="canvas画布操作" />
 
     <Button
         android:layout_width="match_parent"
