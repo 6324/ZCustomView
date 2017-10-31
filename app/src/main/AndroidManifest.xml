@@ -18,7 +18,10 @@
         </activity>
         <activity android:name=".CoordinateActivity" />
         <activity android:name=".CustomActivity1" />
-        <activity android:name=".CustomActivity2"></activity>
+        <activity android:name=".CustomActivity2" />
+        <activity android:name=".CustomActivity3" />
+        <activity android:name=".CustomActivity4" />
+        <activity android:name=".BezierActivity1"></activity>
     </application>
 
 </manifest>

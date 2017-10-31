@@ -27,18 +27,27 @@
         android:text="canvas画布操作" />
 
     <Button
+        android:id="@+id/btncus3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="picture操作" />
 
     <Button
+        android:id="@+id/btncus4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="伸缩" />
 
     <Button
+        android:id="@+id/btncus5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="贝塞尔曲线1" />
+
+    <Button
+        android:id="@+id/btncus6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="贝塞尔曲线2" />
 
 </LinearLayout>

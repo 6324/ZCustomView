@@ -33,4 +33,19 @@ public class MainActivity extends AppCompatActivity {
     public void startcus2() {
         startActivity(new Intent(this, CustomActivity2.class));
     }
+
+    @OnClick(R.id.btncus3)
+    public void startcus3() {
+        startActivity(new Intent(this, CustomActivity3.class));
+    }
+
+    @OnClick(R.id.btncus4)
+    public void startcus4() {
+        startActivity(new Intent(this, CustomActivity4.class));
+    }
+
+    @OnClick(R.id.btncus5)
+    public void startcus5() {
+        startActivity(new Intent(this, BezierActivity1.class));
+    }
 }
