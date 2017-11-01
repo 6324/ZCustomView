@@ -21,7 +21,9 @@
         <activity android:name=".CustomActivity2" />
         <activity android:name=".CustomActivity3" />
         <activity android:name=".CustomActivity4" />
-        <activity android:name=".BezierActivity1"></activity>
+        <activity android:name=".BezierActivity1" />
+        <activity android:name=".ScrollviewActivity" />
+        <activity android:name=".ScrollRecycleActivity"></activity>
     </application>
 
 </manifest>

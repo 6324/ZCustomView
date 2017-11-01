@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * @author z
+ */
 public class MainActivity extends AppCompatActivity {
 
 
@@ -47,5 +50,17 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btncus5)
     public void startcus5() {
         startActivity(new Intent(this, BezierActivity1.class));
+    }
+    @OnClick(R.id.btncus6)
+    public void startcus6() {
+        startActivity(new Intent(this, BezierActivity1.class));
+    }
+    @OnClick(R.id.btncus7)
+    public void startcus7() {
+        startActivity(new Intent(this, ScrollviewActivity.class));
+    }
+    @OnClick(R.id.btncus8)
+    public void startcus8() {
+        startActivity(new Intent(this, ScrollRecycleActivity.class));
     }
 }

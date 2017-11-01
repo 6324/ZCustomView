@@ -7,47 +7,66 @@
     android:orientation="vertical"
     tools:context="com.example.z.zcustomview.MainActivity">
 
-
-    <Button
-        android:id="@+id/btngoxy"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="坐标" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btncus1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="绘制图形" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btncus2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="canvas画布操作" />
+            <Button
+                android:id="@+id/btngoxy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="坐标" />
 
-    <Button
-        android:id="@+id/btncus3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="picture操作" />
+            <Button
+                android:id="@+id/btncus1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="绘制图形" />
 
-    <Button
-        android:id="@+id/btncus4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="伸缩" />
+            <Button
+                android:id="@+id/btncus2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="canvas画布操作" />
 
-    <Button
-        android:id="@+id/btncus5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="贝塞尔曲线1" />
+            <Button
+                android:id="@+id/btncus3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="picture操作" />
 
-    <Button
-        android:id="@+id/btncus6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="贝塞尔曲线2" />
+            <Button
+                android:id="@+id/btncus4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="伸缩" />
 
+            <Button
+                android:id="@+id/btncus5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="贝塞尔曲线1" />
+
+            <Button
+                android:id="@+id/btncus6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="贝塞尔曲线2" />
+            <Button
+                android:id="@+id/btncus7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scrollview" />
+            <Button
+                android:id="@+id/btncus8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="表格" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
