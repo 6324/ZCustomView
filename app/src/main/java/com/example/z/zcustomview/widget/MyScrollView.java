@@ -32,7 +32,7 @@ public class MyScrollView extends ScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
 
-        Log.d(TAG, "onScrollChanged: [" + l + " " + t + " " + oldl + " " + oldt + "]");
+//        Log.d(TAG, "onScrollChanged: [" + l + " " + t + " " + oldl + " " + oldt + "]");
         if (this.view != null) {
                 view.scrollTo(l, t);
         }

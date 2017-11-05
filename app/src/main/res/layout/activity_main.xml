@@ -12,9 +12,9 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btngoxy"
@@ -57,16 +57,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="贝塞尔曲线2" />
+
             <Button
                 android:id="@+id/btncus7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Scrollview" />
+
             <Button
                 android:id="@+id/btncus8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="表格" />
+                android:text="表格RecycleView" />
+
+            <Button
+                android:id="@+id/btncus10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="表格ListView" />
+
+            <Button
+                android:id="@+id/btncus9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="表格封装1" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

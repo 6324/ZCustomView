@@ -3,6 +3,9 @@ package com.example.z.zcustomview;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+
+import com.example.z.zcustomview.widget.Zgrid;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
     public void startcus7() {
         startActivity(new Intent(this, ScrollviewActivity.class));
     }
-    @OnClick(R.id.btncus8)
-    public void startcus8() {
-        startActivity(new Intent(this, ScrollRecycleActivity.class));
+    @OnClick(R.id.btncus9)
+    public void startcus9() {
+        startActivity(new Intent(this, ZgridActivity.class));
+    }
+    @OnClick(R.id.btncus10)
+    public void startcus10() {
+        startActivity(new Intent(this, ScrollListActivity.class));
     }
 }
