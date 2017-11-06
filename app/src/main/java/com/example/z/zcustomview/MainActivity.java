@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
     public void startcus7() {
         startActivity(new Intent(this, ScrollviewActivity.class));
     }
+    @OnClick(R.id.btncus8)
+    public void startcus8() {
+        startActivity(new Intent(this, ZgridActivity2.class));
+    }
     @OnClick(R.id.btncus9)
     public void startcus9() {
         startActivity(new Intent(this, ZgridActivity.class));

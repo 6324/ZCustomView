@@ -30,7 +30,6 @@ public class MyRecycleView extends RecyclerView {
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
 
-        Log.e(TAG, "onMeasure: " + widthSpec + "    " + heightSpec);
 
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthSpec, expandSpec);

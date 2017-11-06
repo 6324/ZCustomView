@@ -64,11 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="Scrollview" />
 
-            <Button
-                android:id="@+id/btncus8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="表格RecycleView" />
+
 
             <Button
                 android:id="@+id/btncus10"
@@ -80,7 +76,12 @@
                 android:id="@+id/btncus9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="表格封装1" />
+                android:text="表格封装样式1" />
+            <Button
+                android:id="@+id/btncus8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="表格封装样式2" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

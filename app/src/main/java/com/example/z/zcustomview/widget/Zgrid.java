@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 import com.example.z.zcustomview.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,10 +47,10 @@ public class Zgrid {
     private ViewGroup viewParent;//表格需要附加的布局
     private boolean isZebra = false;//斑马线
     LayoutInflater inflater;
-    LinearLayoutManager lm;
+    MyLm lm;
     private int gridModel = GRID_MODEL_DEFAULT;//模式
-
-    private int maxGridWidth = 0;
+    private static int maxWidth = 0;
+    private int dataIndexLength = 1;
 
     //header
     private LinearLayout ll_header, ll_header_title;
@@ -63,11 +66,16 @@ public class Zgrid {
     //dataGrid
     private MyRecycleView rvLeft, rvData;
     private MyHorizontalScrollView scrollViewHead, scrollViewData;
-    private List listData = new ArrayList<>();//内容数据
+    private List<List> listData = new ArrayList<>();//内容数据
     private String dataBackgrountColor = DEFAULT_GRID_BACKGROUND_COLOR//表格背景颜色
             , dataTextColor = DEFAULT_TEXT_COLOR//表格文本颜色
             , dataLineColor = DEFAULT_LINE_COLOR;//表格分割线颜色
     private int dataWidth = WRAP_CONTENT, dataHight = WRAP_CONTENT;
+
+    //left
+    private int leftWidth = WRAP_CONTENT;
+    private String leftBackgrountColor = DEFAULT_GRID_BACKGROUND_COLOR;
+    Map mapLayoutPrams = new HashMap();
 
     public static Zgrid getInstance() {
         return new Zgrid();
@@ -153,12 +161,12 @@ public class Zgrid {
 
     /**
      * @param width
-     * @return 设置header每个格子的宽度
+     * @return 设置header每个格子的宽度 默认跟随data区格子变化
      */
-    public Zgrid setHeadWidth(int width) {
-        this.headWidth = width;
-        return this;
-    }
+//    public Zgrid setHeadWidth(int width) {
+//        this.headWidth = width;
+//        return this;
+//    }
 
     /**
      * @param hight
@@ -208,11 +216,32 @@ public class Zgrid {
     }
 
     /**
-     * @param hight
+     * @param height
      * @return 设置数据区每个格子的高度
      */
-    public Zgrid setDataHight(int hight) {
-        this.dataHight = hight;
+    public Zgrid setDataHight(int height) {
+        this.dataHight = height;
+        return this;
+    }
+
+//    ----------------------------------------
+
+
+    /**
+     * @param width
+     * @return 设置左侧宽度
+     */
+    public Zgrid setLeftWidth(int width) {
+        this.leftWidth = width;
+        return this;
+    }
+
+    /**
+     * @param color
+     * @return 设置左侧背景颜色
+     */
+    public Zgrid setLeftBackgroundColor(String color) {
+        this.leftBackgrountColor = color;
         return this;
     }
 
@@ -236,20 +265,36 @@ public class Zgrid {
 
 
     public void show() {
+        //初始化所有布局
         initView();
-        setLeftView();
-        setDataView();
-        //获取格子最大宽度，最后设置header让header的格子宽度和数据区的宽度一样大
+
+        switch (gridModel) {
+            case GRID_MODEL_DEFAULT:
+                //先设置数据区
+                setDataView();
+                //设置左侧区
+                setLeftView();
+                break;
+            case GRID_MODEL_NO_LEFT:
+                dataIndexLength = 0;
+                ll_header_title.setVisibility(View.GONE);//隐藏左上角
+                //先设置数据区
+                setDataView();
+                break;
+        }
+
+
+        //设置头
         setHeader();
 
         scrollViewHead.setScrollView(scrollViewData);
         scrollViewData.setScrollView(scrollViewHead);
 
+
     }
 
     public void initView() {
         inflater = LayoutInflater.from(context);
-        lm = new LinearLayoutManager(context);
         view = (LinearLayout) inflater.inflate(R.layout.activity_scroll_recycle, null);
         //初始化主布局
         ll_header = view.findViewById(R.id.ll_header);//header
@@ -269,49 +314,86 @@ public class Zgrid {
 
     public void setHeader() {
 
-        switch (gridModel) {
-            case GRID_MODEL_DEFAULT:
-                tv_header_title.setText(headTitle);
-                tv_header_title.setTextColor(Color.parseColor(headTextColor));
-                if (headerData != null && !headerData.isEmpty()) {
-                    tv_header_title.setText(headerData.get(0).toString());
+        tv_header_title.setText(headTitle);
+        tv_header_title.setTextColor(Color.parseColor(headTextColor));
+        if (headerData != null && !headerData.isEmpty()) {
+            tv_header_title.setText(headerData.get(0).toString());
+            //从1开始,0为固定的title
+            for (int i = dataIndexLength; i < headerData.size(); i++) {
+                View view = inflater.inflate(R.layout.item_gride, ll_header, false);
 
-                    //从1开始,0为固定的title
-                    for (int i = 1; i < headerData.size(); i++) {
-                        View view = inflater.inflate(R.layout.item_gride, ll_header, false);
+                LinearLayout ll_grid = view.findViewById(R.id.ll_grid);
+                TextView tv_data = ll_grid.findViewById(R.id.tv_data);
+                tv_data.setTextColor(Color.parseColor(headTextColor));
 
-                        LinearLayout ll_grid = view.findViewById(R.id.ll_grid);
-                        TextView tv_data = ll_grid.findViewById(R.id.tv_data);
-                        tv_data.setTextColor(Color.parseColor(headTextColor));
+                tv_data.setText(headerData.get(i).toString());
+                ll_header_title.setBackgroundColor(Color.parseColor(headerBackGroundColor));
+                ll_header.setBackgroundColor(Color.parseColor(headerBackGroundColor));
+                LinearLayout.LayoutParams layoutParams_ll_header_title = null;
+                FrameLayout.LayoutParams layoutParams_ll_header = null;
 
-                        tv_data.setText(headerData.get(i).toString());
-                        ll_header_title.setBackgroundColor(Color.parseColor(headerBackGroundColor));
-                        ll_header.setBackgroundColor(Color.parseColor(headerBackGroundColor));
+                switch (gridModel) {
+                    case GRID_MODEL_DEFAULT:
 
-                        LinearLayout.LayoutParams layoutParams_ll_header_title = new LinearLayout.LayoutParams(headWidth, headHight);
-                        FrameLayout.LayoutParams layoutParams_ll_header = new FrameLayout.LayoutParams(headWidth, headHight);
-                        ll_grid.setLayoutParams(layoutParams_ll_header);
-                        ll_header_title.setLayoutParams(layoutParams_ll_header_title);
+                        layoutParams_ll_header_title = new LinearLayout.LayoutParams(leftWidth, headHight);
+                        switch (dataWidth) {
+                            case WRAP_CONTENT:
+                                layoutParams_ll_header = new FrameLayout.LayoutParams((Integer) mapLayoutPrams.get(i), headHight);
+                                break;
+                            default:
+                                layoutParams_ll_header = new FrameLayout.LayoutParams(dataWidth, headHight);
+                                break;
 
-                        ll_header.addView(ll_grid);
-                    }
+                        }
+                        break;
 
-                } else {
-                    System.out.println("------>未设置header");
+                    case GRID_MODEL_NO_LEFT:
+
+                        switch (dataWidth) {
+                            case WRAP_CONTENT:
+                                layoutParams_ll_header_title = new LinearLayout.LayoutParams((Integer) mapLayoutPrams.get(i), headHight);
+                                layoutParams_ll_header = new FrameLayout.LayoutParams((Integer) mapLayoutPrams.get(i), headHight);
+                                break;
+                            default:
+                                layoutParams_ll_header_title = new LinearLayout.LayoutParams(dataWidth, headHight);
+                                layoutParams_ll_header = new FrameLayout.LayoutParams(dataWidth, headHight);
+                                break;
+                        }
+
+                        break;
                 }
-                break;
+
+
+                ll_grid.setLayoutParams(layoutParams_ll_header);
+                ll_header_title.setLayoutParams(layoutParams_ll_header_title);
+
+                ll_header.addView(ll_grid);
+            }
+
+        } else {
+            System.out.println("------>未设置header");
         }
 
 
     }
 
     public void setLeftView() {
+
         //防止滑动卡顿
         rvLeft.setNestedScrollingEnabled(false);
-
+        lm = new MyLm(context);
         rvLeft.setLayoutManager(lm);
         LeftAdapter leftAdapter = new LeftAdapter();
         rvLeft.setAdapter(leftAdapter);
+        rvLeft.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+        switch (leftWidth) {
+            case WRAP_CONTENT:
+                getLeftParams();
+                break;
+            default:
+
+                break;
+        }
         leftAdapter.setData(listData);
 
     }
@@ -319,12 +401,19 @@ public class Zgrid {
     public void setDataView() {
         //防止滑动卡顿
         rvData.setNestedScrollingEnabled(false);
-        lm = new LinearLayoutManager(context);
+        lm = new MyLm(context);
         rvData.setLayoutManager(lm);
         DataAdapter dataAdapter = new DataAdapter();
         rvData.setAdapter(dataAdapter);
-        dataAdapter.setData(listData);
+        rvData.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+        switch (dataWidth) {
+            case WRAP_CONTENT:
+                getLayoutPrams();
+                break;
 
+        }
+
+        dataAdapter.setData(listData);
     }
 
     public class LeftAdapter extends RecyclerView.Adapter<LeftAdapter.ViewHolder> {
@@ -349,7 +438,17 @@ public class Zgrid {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(headWidth, headHight);
+            LinearLayout.LayoutParams layoutParams;
+            switch (leftWidth) {
+                case WRAP_CONTENT:
+                    layoutParams = new LinearLayout.LayoutParams(WRAP_CONTENT, dataHight);
+                    break;
+                default:
+                    layoutParams = new LinearLayout.LayoutParams(leftWidth, dataHight);
+                    break;
+            }
+
+
             holder.llGrid.setLayoutParams(layoutParams);
             holder.tv_data.setText(list.get(position).get(0).toString());
         }
@@ -382,10 +481,10 @@ public class Zgrid {
         private List<List> list;
 
         public void setData(List list) {
-
             this.list = list;
             notifyDataSetChanged();
         }
+
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -398,25 +497,35 @@ public class Zgrid {
         }
 
         private static final String TAG = "DataAdapter";
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
 
-            for (int i = 1; i < list.get(position).size(); i++) {
+
+        @Override
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
+
+
+            for (int i = dataIndexLength; i < list.get(position).size(); i++) {
                 View view = inflater.inflate(R.layout.item_gride, holder.ll_data, false);
-                LinearLayout grid = view.findViewById(R.id.ll_grid);
+                final LinearLayout grid = view.findViewById(R.id.ll_grid);
                 TextView textView = grid.findViewById(R.id.tv_data);
                 textView.setText(list.get(position).get(i).toString());
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(headWidth, headHight);
-                grid.setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams;
+                switch (dataWidth) {
+                    case WRAP_CONTENT:
+                        Log.d(TAG, "onBindViewHolder: WRAP_CONTENT");
+                        layoutParams = new LinearLayout.LayoutParams((Integer) mapLayoutPrams.get(i), dataHight);
+                        break;
+                    default:
+                        Log.d(TAG, "onBindViewHolder: dataWidth:" + dataWidth);
+                        layoutParams = new LinearLayout.LayoutParams(dataWidth, dataHight);
+                        break;
+                }
 
-                Log.e(TAG, "onBindViewHolder: "+grid.getMeasuredWidth() );
+                grid.setLayoutParams(layoutParams);
                 holder.ll_data.addView(grid);
             }
 
 
         }
-
-
 
 
         @Override
@@ -438,4 +547,70 @@ public class Zgrid {
             }
         }
     }
+
+
+    public class MyLm extends LinearLayoutManager {
+        private static final String TAG = "MyLm";
+
+        public MyLm(Context context) {
+            super(context);
+        }
+
+        public MyLm(Context context, int orientation, boolean reverseLayout) {
+            super(context, orientation, reverseLayout);
+        }
+
+        public MyLm(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        @Override
+        public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {
+
+            super.onMeasure(recycler, state, widthSpec, heightSpec);
+        }
+
+    }
+
+    private static final String TAG = "Zgrid";
+
+    public void getLayoutPrams() {
+        Log.e(TAG, "getLayoutPrams: WrapContent");
+
+        for (int position = 0; position < listData.size(); position++) {
+            for (int i = dataIndexLength; i < listData.get(position).size(); i++) {
+                View view = inflater.inflate(R.layout.item_gride, null);
+                final LinearLayout grid = view.findViewById(R.id.ll_grid);
+                TextView textView = grid.findViewById(R.id.tv_data);
+                textView.setText(listData.get(position).get(i).toString());
+
+                grid.measure(0, 0);
+                int width = grid.getMeasuredWidth();
+
+                if (mapLayoutPrams.get(i) == null || (int) mapLayoutPrams.get(i) < width) {
+                    mapLayoutPrams.put(i, width);
+                }
+                System.out.println(mapLayoutPrams);
+            }
+        }
+
+    }
+
+
+    public void getLeftParams() {
+        for (int i = dataIndexLength; i < listData.size(); i++) {
+            View view = inflater.inflate(R.layout.item_gride, null);
+            final LinearLayout grid = view.findViewById(R.id.ll_grid);
+            TextView textView = grid.findViewById(R.id.tv_data);
+            textView.setText(listData.get(i).get(0).toString());
+
+            grid.measure(0, 0);
+            int width = grid.getMeasuredWidth();
+
+            if (leftWidth < width) {
+                leftWidth = width;
+            }
+        }
+    }
+
 }

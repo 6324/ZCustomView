@@ -1,12 +1,8 @@
 package com.example.z.zcustomview;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -16,18 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class ZgridActivity extends AppCompatActivity {
+public class ZgridActivity2 extends AppCompatActivity {
     private List<List> listData;
     private List<String> listHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zgrid);
+        setContentView(R.layout.activity_zgrid2);
         initView();
     }
 
@@ -63,18 +55,19 @@ public class ZgridActivity extends AppCompatActivity {
         }
 
 
-        View view = findViewById(R.id.ll_main);
+
+
+        final View view2 = findViewById(R.id.ll_main);
         Zgrid.getInstance()
-                .setContext(this)
-                .setHeadHight(200)
-//                .setLeftWidth(500)
+                .setModel(Zgrid.GRID_MODEL_NO_LEFT)
+                .setContext(ZgridActivity2.this)
                 .setHeaderBackgroundColor("#4591f5")
                 .setHeaderTextColor("#FFFFFF")
                 .setHeaderData(listHeader)
+                .setHeadHight(200)
                 .setData(listData)
-                .viewParent((LinearLayout) view)
+                .viewParent((LinearLayout) view2)
                 .show();
-
 
         Toast.makeText(this, "耗时 " + (System.currentTimeMillis() - a), Toast.LENGTH_SHORT).show();
     }
